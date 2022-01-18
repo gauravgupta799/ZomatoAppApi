@@ -39,26 +39,27 @@ app.get('/location',(req,res) => {
 
 // Restaurants
 app.get('/restaurants',(req,res) => {
-    db.collection('restaurant').find().toArray((err, result)=>{
+    db.collection('restaurants').find().toArray((err, result)=>{
         if(err) throw err;
         res.send(result)
+
     });
 })
 
 // query example
 app.get('/restaurant',(req,res) =>{
     var query = {}
-    if(req.query.cityId){
-        query ={city:req.query.cityId}
+    if(req.query.stateId){
+        query ={state_id:Number(req.query.stateId)}
+    }else if(req.query.mealtype_id){
+        query ={"mealTypes.mealtype_id":req.query.mealtype}
     }
-    else if(req.query.mealtype){
-        query ={"type.mealtype":req.query.mealtype}
-    }
-    db.collection('restaurant').find(query).toArray((err,result)=>{
+    db.collection('restaurants').find(query).toArray((err,result)=>{
         if(err) throw err;
         res.send(result)
     })
 })
+
 
 // Filter Api 
 // http://localhost:8210/filter/1?lcost=400&hcost=600
