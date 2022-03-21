@@ -110,7 +110,25 @@ app.get('/quicksearch',(req,res) => {
 // Restaurants Details
 app.get('/details/:id',(req,res) => {
     var id = req.params.id
-    db.collection('restaurants').find({_id:id}).toArray((err,result)=>{
+    db.collection('restaurants').find({restaurant_id:Number(id)}).toArray((err,result)=>{
+        if(err) throw err;
+        res.send(result)
+    })
+})
+
+// menu Details on basis for restaurant
+app.get('/menu/:id',(req,res) => {
+    var id = req.params.id
+    console.log(id)
+    db.collection('menu').find({restaurant_id:Number(id)}).toArray((err,result)=>{
+        if(err) throw err;
+        res.send(result)
+    })
+})
+
+app.post('/menuItem',(req,res) => {
+    console.log(req.body)
+    db.collection('menu').find({menu_id:{$in:req.body.ids}}).toArray((err,result)=>{
         if(err) throw err;
         res.send(result)
     })
