@@ -62,8 +62,6 @@ app.get('/restaurant',(req,res) =>{
 
 
 // Filter Api 
-// http://localhost:8210/filter/1?lcost=400&hcost=600
-
 app.get('/filter/:mealType',(req,res) => {
     var sort = {cost:1}
     var skip = 0;
@@ -136,8 +134,8 @@ app.post('/menuItem',(req,res) => {
 
 // Place Order
 app.post('/placeOrder', (req,res)=>{
-    console.log(req.body)
-    db.collection('orders').find().toArray((err,result)=>{
+//     console.log(req.body)
+    db.collection('orders').insert(req.body,(err,result)=>{
         if(err) throw err;
         res.send('Order Placed')
     })
